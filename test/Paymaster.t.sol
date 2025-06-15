@@ -8,12 +8,14 @@ import { EntryPoint } from "@account-abstraction/contracts/core/EntryPoint.sol";
 import { PackedUserOperation } from "@account-abstraction/contracts/interfaces/PackedUserOperation.sol";
 import { ISemaphore } from "@semaphore-protocol/contracts/interfaces/ISemaphore.sol";
 import { IPaymaster } from "@account-abstraction/contracts/interfaces/IPaymaster.sol";
+import { SemaphoreAdmin } from "../src/Admin.sol";
 
 contract SimpleSemaphorePaymasterTest is Test {
     uint256 public constant GROUP_ID = 0;
 
     SimpleSemaphorePaymaster public paymaster;
     AlwaysValidVerifier public verifier;
+    SemaphoreAdmin public admin;
 
     address public entryPoint;
     address public sender = address(0x1234);
@@ -22,12 +24,13 @@ contract SimpleSemaphorePaymasterTest is Test {
         // Deploy mock contracts
         entryPoint = address(new EntryPoint());
         verifier = new AlwaysValidVerifier();
+        admin = new SemaphoreAdmin(0.001 ether);
 
         // Deploy paymaster
         paymaster = new SimpleSemaphorePaymaster(entryPoint, address(verifier));
 
         // Create group and fund it
-        paymaster.createGroup();
+        paymaster.createGroup(address(admin));
         paymaster.depositForGroup{ value: 10 ether }(GROUP_ID);
         paymaster.addStake{ value: 1 ether }(1);
     }
