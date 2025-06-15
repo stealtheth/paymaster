@@ -1,4 +1,4 @@
-# Simple Semaphore Paymaster
+# Semaphore paymaster And Offchain ENS Resolver
 
 simple semaphore paymaster that allows users to deposit gas (eth) into a paymaster for later anonymous use.
 
