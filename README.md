@@ -7,6 +7,10 @@ simple semaphore paymaster that allows users to deposit gas (eth) into a paymast
 Build smart contracts:
 
 ```bash
+yarn install
+```
+
+```bash
 yarn build
 ```
 
